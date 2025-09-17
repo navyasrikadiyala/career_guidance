@@ -9,7 +9,12 @@ const Profile = ({ user }) => {
   const [userProfile, setUserProfile] = useState({
     skills: ['JavaScript', 'React', 'Node.js', 'Python'],
     interests: ['Web Development', 'Data Science', 'AI/ML', 'Mobile Apps'],
-    goals: ['Become Full Stack Developer', 'Get promoted to Tech Lead', 'Master React & Node.js', 'Start own tech company', 'Complete AWS Certification'],
+    goals: [
+      { text: 'Become Full Stack Developer', progress: 60 },
+      { text: 'Get promoted to Tech Lead', progress: 30 },
+      { text: 'Master React & Node.js', progress: 80 },
+      { text: 'Start own tech company', progress: 10 }
+    ],
     bio: 'Passionate about technology and creating innovative solutions.',
     education: 'B.Tech Computer Science',
     experience: '2 years'
@@ -26,12 +31,28 @@ const Profile = ({ user }) => {
 
   const addItem = (section) => {
     if (newItem.trim()) {
-      setUserProfile(prev => ({
-        ...prev,
-        [section]: [...prev[section], newItem.trim()]
-      }));
+      if (section === 'goals') {
+        setUserProfile(prev => ({
+          ...prev,
+          goals: [...prev.goals, { text: newItem.trim(), progress: 0 }]
+        }));
+      } else {
+        setUserProfile(prev => ({
+          ...prev,
+          [section]: [...prev[section], newItem.trim()]
+        }));
+      }
       setNewItem('');
     }
+  };
+
+  const updateGoalProgress = (index, progress) => {
+    setUserProfile(prev => ({
+      ...prev,
+      goals: prev.goals.map((goal, i) => 
+        i === index ? { ...goal, progress: parseInt(progress) } : goal
+      )
+    }));
   };
 
   const removeItem = (section, index) => {
@@ -221,25 +242,25 @@ const Profile = ({ user }) => {
                 <i className="fas fa-target"></i>
                 Career Goals
               </h3>
-              <p>Track your career milestones and achievements</p>
+              <p>Set and track your career milestones</p>
             </div>
-            <div className="goals-grid">
+            <div className="goals-list">
               {userProfile.goals.map((goal, index) => {
-                const progress = Math.min((index + 1) * 25 + Math.random() * 20, 100);
-                const status = progress >= 80 ? 'completed' : progress >= 50 ? 'in-progress' : 'pending';
+                const status = goal.progress >= 80 ? 'completed' : goal.progress >= 30 ? 'in-progress' : 'pending';
                 return (
-                  <div key={index} className={`goal-card ${status}`}>
-                    <div className="goal-header">
+                  <div key={index} className={`goal-item ${status}`}>
+                    <div className="goal-main">
                       <div className="goal-icon">
                         <i className={`fas ${
                           status === 'completed' ? 'fa-check-circle' : 
                           status === 'in-progress' ? 'fa-clock' : 'fa-target'
                         }`}></i>
                       </div>
-                      <div className="goal-status">
+                      <div className="goal-text">
+                        <h4>{goal.text}</h4>
                         <span className={`status-badge ${status}`}>
                           {status === 'completed' ? 'Completed' : 
-                           status === 'in-progress' ? 'In Progress' : 'Pending'}
+                           status === 'in-progress' ? 'In Progress' : 'Not Started'}
                         </span>
                       </div>
                       <button 
@@ -250,19 +271,23 @@ const Profile = ({ user }) => {
                         <i className="fas fa-times"></i>
                       </button>
                     </div>
-                    <div className="goal-content">
-                      <h4>{goal}</h4>
-                      <div className="goal-progress">
-                        <div className="progress-info">
-                          <span>Progress</span>
-                          <span>{Math.round(progress)}%</span>
-                        </div>
-                        <div className="progress-bar">
-                          <div 
-                            className="progress-fill" 
-                            style={{width: `${progress}%`}}
-                          ></div>
-                        </div>
+                    <div className="goal-progress">
+                      <div className="progress-controls">
+                        <label>Progress: {goal.progress}%</label>
+                        <input 
+                          type="range" 
+                          min="0" 
+                          max="100" 
+                          value={goal.progress}
+                          onChange={(e) => updateGoalProgress(index, e.target.value)}
+                          className="progress-slider"
+                        />
+                      </div>
+                      <div className="progress-bar">
+                        <div 
+                          className="progress-fill" 
+                          style={{width: `${goal.progress}%`}}
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -270,16 +295,14 @@ const Profile = ({ user }) => {
               })}
             </div>
             <div className="add-goal-form">
-              <div className="form-header">
-                <h4>
-                  <i className="fas fa-plus-circle"></i>
-                  Add New Goal
-                </h4>
-              </div>
+              <h4>
+                <i className="fas fa-plus-circle"></i>
+                Add New Goal
+              </h4>
               <div className="input-group">
                 <input 
                   type="text" 
-                  placeholder="Enter your career goal (e.g., Become a Senior Developer, Learn Machine Learning...)"
+                  placeholder="Enter your career goal..."
                   value={newItem}
                   onChange={(e) => setNewItem(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && addItem('goals')}
@@ -291,7 +314,7 @@ const Profile = ({ user }) => {
                   disabled={!newItem.trim()}
                 >
                   <i className="fas fa-plus"></i>
-                  Add Goal
+                  Add
                 </button>
               </div>
             </div>

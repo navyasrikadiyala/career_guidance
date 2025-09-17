@@ -359,9 +359,70 @@ function App() {
       <main className="main-content">
         {activeTab === 'home' && (
           <div className="home-section">
-            <div className="hero">
-              <h2>Welcome to CareerPath</h2>
-              <p>Your journey to the perfect career starts here</p>
+            <div className="hero career-hero">
+              <div className="hero-background">
+                <div className="floating-shapes">
+                  <div className="shape shape-1"></div>
+                  <div className="shape shape-2"></div>
+                  <div className="shape shape-3"></div>
+                  <div className="shape shape-4"></div>
+                </div>
+                <div className="career-icons">
+                  <div className="icon-wrapper">
+                    <i className="fas fa-graduation-cap"></i>
+                    <span className="icon-label">Education</span>
+                  </div>
+                  <div className="icon-wrapper">
+                    <i className="fas fa-briefcase"></i>
+                    <span className="icon-label">Career</span>
+                  </div>
+                  <div className="icon-wrapper">
+                    <i className="fas fa-chart-line"></i>
+                    <span className="icon-label">Growth</span>
+                  </div>
+                  <div className="icon-wrapper">
+                    <i className="fas fa-lightbulb"></i>
+                    <span className="icon-label">Innovation</span>
+                  </div>
+                  <div className="icon-wrapper">
+                    <i className="fas fa-rocket"></i>
+                    <span className="icon-label">Launch</span>
+                  </div>
+                  <div className="icon-wrapper">
+                    <i className="fas fa-target"></i>
+                    <span className="icon-label">Goals</span>
+                  </div>
+                </div>
+              </div>
+              <div className="hero-content">
+                <div className="hero-badge"><i className="fas fa-rocket"></i> Your Future Starts Here</div>
+                <h1 className="hero-title">
+                  <span className="title-line-1">Welcome to</span>
+                  <span className="title-line-2">Career<span className="highlight">Path</span></span>
+                </h1>
+                <p className="hero-subtitle">Discover your perfect career with AI-powered guidance and personalized roadmaps</p>
+                <div className="hero-cta">
+                  <button className="cta-primary" onClick={() => handleTabChange('explore')}><i className="fas fa-search"></i> Explore Careers</button>
+                  <button className="cta-secondary" onClick={() => handleTabChange('guidance')}><i className="fas fa-robot"></i> Get AI Guidance</button>
+                </div>
+                <div className="hero-stats">
+                  <div className="stat">
+                    <div className="stat-icon"><i className="fas fa-graduation-cap"></i></div>
+                    <span className="stat-number">6+</span>
+                    <span className="stat-label">Degree Programs</span>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-icon"><i className="fas fa-briefcase"></i></div>
+                    <span className="stat-number">100+</span>
+                    <span className="stat-label">Career Paths</span>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-icon"><i className="fas fa-brain"></i></div>
+                    <span className="stat-number">AI</span>
+                    <span className="stat-label">Powered Guidance</span>
+                  </div>
+                </div>
+              </div>
             </div>
             
             <FeaturesSection />
