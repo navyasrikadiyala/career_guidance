@@ -402,7 +402,6 @@ function App() {
                 </h1>
                 <p className="hero-subtitle">Discover your perfect career with AI-powered guidance and personalized roadmaps</p>
                 <div className="hero-cta">
-                  <button className="cta-primary" onClick={() => handleTabChange('explore')}><i className="fas fa-search"></i> Explore Careers</button>
                   <button className="cta-secondary" onClick={() => handleTabChange('guidance')}><i className="fas fa-robot"></i> Get AI Guidance</button>
                 </div>
                 <div className="hero-stats">
